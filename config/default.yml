@@ -1,0 +1,245 @@
+---
+parameters:
+    wph-install-retry:
+        redis-key-prefix: wph-installation
+        redis-ttl: 86400 # in seconds
+        max-retries: 3
+    mdh-provisioning:
+        dns-not-ready-retry-delay: 600000 # 10 minutes
+    rabbitmq:
+        hostname: rabbitmq.service.dev
+        password: guest
+        username: guest
+        loggingExchange:
+            name: 'logging'
+            type: 'topic'
+        failureExchange:
+            name: 'failure'
+            type: 'topic'
+        eventExchange:
+            name: 'events'
+            type: 'topic'
+        commandExchange:
+            name: 'commands'
+            type: 'topic'
+        messageExchange:
+            name: 'messages'
+            type: 'x-delayed-message'
+            options:
+                durable: true
+                arguments:
+                    'x-delayed-type': 'topic'
+    databases:
+        stack-hosting:
+            host: db.service.dev
+            name: stack_hosting
+            user: root
+            password: root
+            type: mysql
+        clusterconfig:
+            host: md3db.service.dev
+            name: clusterconfig
+            user: mijndomein
+            password: 'nxdJ4WV4GKPR0wJh'
+        puntdomein:
+            host: md3db.service.dev
+            name: puntdomein
+            user: mijndomein
+            password: 'nxdJ4WV4GKPR0wJh'
+        mdh-cluster:
+            user: 'mdadmin'
+            password: 'mijndomeinvdb'
+        redis:
+            host: redis.service.dev
+            db: 1
+    graphql:
+        gateway:
+            url: https://gateway-graphql.accept.mijndomein.nl/graphql
+        mdh:
+            url: https://mdh-graphql.accept.mijndomein.nl/graphql
+    md3:
+        control-panel:
+            url: https://md3.accept.mijndomein.nl/control-panel-api
+            username: controlpanel
+            password: '1234'
+        orderhandling:
+            url: https://md3.accept.mijndomein.nl/api
+            username: orderhandling
+            password: '1234'
+
+    consumer:
+        provisionParking:
+            queue: stack_parking_provisionRequested
+            routingKeys: 
+                - event.stack.parking.provision.requested
+            mandatory: true
+            prefetch: 1
+            maxRetries: 2
+            retryDelay: 5000
+        provisionHosting:
+            queue: stack_hosting_provision
+            routingKeys:
+                - command.stack.hosting.provision
+                - command.stack.wordpresshosting.provision
+            mandatory: true
+            prefetch: 1
+            maxRetries: 2
+            retryDelay: 5000
+        restoreHosting:
+            queue: stack_hosting_restore
+            routingKeys:
+                - command.stack.hosting.restore
+                - command.stack.wordpresshosting.restore
+            mandatory: true
+            prefetch: 1
+            maxRetries: 2
+            retryDelay: 5000
+        endHosting:
+            queue: stack_hosting_end
+            routingKeys:
+                - command.stack.hosting.end
+                - command.stack.wordpresshosting.end
+            mandatory: true
+            prefetch: 1
+            maxRetries: 2
+            retryDelay: 5000
+        removeHosting:
+            queue: stack_hosting_remove
+            routingKeys:
+                - command.stack.hosting.remove
+                - command.stack.wordpresshosting.remove
+            mandatory: true
+            prefetch: 1
+            maxRetries: 2
+            retryDelay: 5000
+        activateProduct:
+            queue: stack_hosting_activate
+            routingKeys:
+                - event.mdh.activated
+            mandatory: false
+            prefetch: 1
+            retryDelay: 5000
+            maxRetries: 2
+        blockDomain:
+            queue: stack_hosting_block_domain
+            routingKeys:
+                - md3.event.domain.blocked
+            mandatory: false
+            prefetch: 1
+            maxRetries: 2
+            retryDelay: 5000
+        unblockDomain:
+            queue: stack_hosting_unblock_domain
+            routingKeys:
+                - md3.event.domain.unblocked
+            mandatory: false
+            prefetch: 1
+            maxRetries: 2
+            retryDelay: 5000
+        blockAccount:
+            queue: stack_hosting_block_account
+            routingKeys:
+                - md3.event.account.blocked_domains
+            mandatory: false
+            prefetch: 1
+            maxRetries: 2
+            retryDelay: 5000
+        unblockAccount:
+            queue: stack_hosting_unblock_account
+            routingKeys:
+                - md3.event.account.unblocked_domains
+            mandatory: false
+            prefetch: 1
+            maxRetries: 2
+            retryDelay: 5000
+        createDatabase:
+            queue: stack_hosting_create_database
+            routingKeys:
+                - command.hosting.create_database
+            mandatory: false
+            prefetch: 1
+            maxRetries: 2
+            retryDelay: 5000
+        deleteDatabase:
+            queue: stack_hosting_delete_database
+            routingKeys:
+                - command.hosting.delete_database
+            mandatory: false
+            prefetch: 1
+            maxRetries: 2
+            retryDelay: 5000
+        updateDatabase:
+            queue: stack_hosting_update_database
+            routingKeys:
+                - command.hosting.update_database
+            mandatory: false
+            prefetch: 1
+            maxRetries: 2
+            retryDelay: 5000
+        sslInstalled:
+            queue: stack_hosting_ssl_install
+            routingKeys:
+                - event.stack.ssl.installed
+            mandatory: false
+            prefetch: 1
+            maxRetries: 2
+            retryDelay: 5000
+        hostingSslCertificateInstalled:
+            queue: hosting_ssl_certificated_installed
+            routingKeys:
+                - event.hosting.ssl.certificateInstalled
+            mandatory: false
+            prefetch: 1
+            maxRetries: 2
+            retryDelay: 5000
+        softwareInstalled:
+            queue: stack_hosting_software_install_success
+            routingKeys:
+                - event.mdh.install_software.success
+            mandatory: false
+            prefetch: 1
+            maxRetries: 2
+            retryDelay: 5000
+        softwareInstallFailed:
+            queue: stack_hosting_software_install_failed
+            routingKeys:
+                - event.mdh.install_software.failure
+            mandatory: false
+            prefetch: 1
+            maxRetries: 2
+            retryDelay: 5000
+        hostingProvisioned:
+            queue: stack_hosting_events
+            routingKeys:
+                - event.stack.hosting.provisioned
+                - event.stack.wordpresshosting.provisioned
+            mandatory: false
+            prefetch: 1
+            retryDelay: 5000
+            maxRetries: 2
+        blockHosting:
+            queue: stack_hosting_block
+            routingKeys:
+                - command.stack.hosting.block
+                - command.stack.wordpresshosting.block
+            mandatory: true
+            prefetch: 1
+            retryDelay: 5000
+            maxRetries: 2
+        unblockHosting:
+            queue: stack_hosting_unblock
+            routingKeys:
+                - command.stack.hosting.unblock
+                - command.stack.wordpresshosting.unblock
+            mandatory: true
+            prefetch: 1
+            retryDelay: 5000
+            maxRetries: 2
+        transferHosting:
+            queue: stack_hosting_transfer
+            routingKeys:
+                - event.account.stack.transferred
+            mandatory: false
+            prefetch: 1
+            retryDelay: 5000
+            maxRetries: 2

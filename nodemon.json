@@ -1,0 +1,13 @@
+{
+    "restartable": "rs",
+    "ignore": ["**/*.js", ".git", "node_modules/**/node_modules", "tests/**/*"],
+    "verbose": false,
+    "execMap": {
+        "js": "npm run build && DEBUG=app*,messagebroker* node dist/app.js"
+    },
+    "events": {
+        "restart": "echo 'App restarted due to: '$FILENAME''"
+    },
+    "watch": ["src/", "config/"],
+    "ext": "ts json yml"
+}

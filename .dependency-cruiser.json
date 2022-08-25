@@ -1,0 +1,59 @@
+{
+    "forbidden": [{
+            "name": "no-domain-to-app",
+            "severity": "error",
+            "from": {
+                "path": "^(src/Domain)"
+            },
+            "to": {
+                "path": "^(src/Application)"
+            }
+        },
+
+        {
+            "name": "no-domain-to-infra",
+            "severity": "error",
+            "from": {
+                "path": "^(src/Domain)"
+            },
+            "to": {
+                "path": "^(src/Infrastructure)"
+            }
+        },
+
+        {
+            "name": "no-app-to-infra",
+            "severity": "error",
+            "from": {
+                "path": "^(src/Application)"
+            },
+            "to": {
+                "path": "^(src/Infrastructure)"
+            }
+        }
+    ],
+    "options": {
+        "doNotFollow": {
+            "path": "node_modules",
+            "dependencyTypes": [
+                "npm",
+                "npm-dev",
+                "npm-optional",
+                "npm-peer",
+                "npm-bundled",
+                "npm-no-pkg"
+            ]
+        },
+
+        "exclude": {
+            "path": "(^node_modules)|AppServiceProvider|ServiceProvider",
+            "dynamic": true
+        },
+
+        "tsPreCompilationDeps": true,
+
+        "tsConfig": {
+            "fileName": "./tsconfig.json"
+        }
+    }
+}
