@@ -1,8 +1,4 @@
 bin
 config
-coverage
-docker
-docs
 node_modules
-var
 ormconfig.ts
