@@ -7,6 +7,8 @@ Enable your sound 🔊
 And install all the dependencies
 `yarn install`
 
+![AudioVisualizer](./assets/audio-visualizer.gif)
+
 ## Routines
 
 Execute the following commands to execute a routine or a specific action
