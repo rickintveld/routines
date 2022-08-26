@@ -2,15 +2,18 @@
 parameters:
     databases:
         mysql:
-            host: db.service.dev
-            name: stack_hosting
-            user: root
-            password: root
+            host: db
+            name: db
+            user: db
+            password: db
             type: mysql
         redis:
-            host: redis.service.dev
+            host: redis
             db: 1
     routines:
-        morning: ['hello', 'telegram', 'whatsapp']
-        afternoon: ['hello', 'telegram', 'whatsapp']
+        morning: ['hello', 'telegram', 'whatsapp', 'news', 'forex', 'weather', 'email']
+        afternoon: ['hello', 'telegram', 'whatsapp', 'forex']
         evening: ['hello', 'telegram', 'whatsapp']
+        forex: ['forex']
+        weather: ['weather']
+        email: ['email']
