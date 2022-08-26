@@ -1,16 +1,18 @@
 import { createInjector } from 'typed-inject';
 import { Logger } from 'tslog';
-import HelloCommandHandler from '../../Application/CommandHandler/HelloCommandHandler';
 import eventTypes from '../../Domain/Types/EventTypes';
+import HelloCommandHandler from '../../Application/CommandHandler/HelloCommandHandler';
 import HelloRequestHandler from '../RequestHandler/HelloRequestHandler';
 import RequestHandlerCollection from '../RequestHandler/RequestHandlerCollection';
 import Routine from '../Routine';
+import Say from '../../Application/Output/Say';
 
 export default class ServiceProvider {
     public register() {
         const injector = createInjector()
             .provideValue('EventTypes', eventTypes)
             .provideClass('Logger', Logger)
+            .provideClass('Say', Say)
             .provideClass('HelloCommandHandler', HelloCommandHandler)
             .provideClass('HelloRequestHandler', HelloRequestHandler)
             .provideClass('RequestHandlerCollection', RequestHandlerCollection)

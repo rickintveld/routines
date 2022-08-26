@@ -1,9 +1,10 @@
 import { Logger } from 'tslog';
+import Say from '../Output/Say';
 
 export default abstract class CommandHandler<T> {
-    public static inject = ['Logger'] as const;
+    public static inject = ['Logger', 'Say'] as const;
 
-    constructor(private logger: Logger) {}
+    constructor(private logger: Logger, private say: Say) {}
 
     public async handle(command: T): Promise<void> {
         this.logger.info('Update command state to: Pending');
@@ -12,6 +13,7 @@ export default abstract class CommandHandler<T> {
         try {
             const output = await this.execute(command);
             this.logger.info(output);
+            this.say.speak(output);
         } catch (e) {
             this.logger.error(e.message);
             this.logger.info('Update command state to: Failed');
