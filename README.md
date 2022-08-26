@@ -2,7 +2,7 @@
 
 Enable your sound 🔊
 
-> The terminal with output the result through text to speech
+> The terminal will output the result through text to speech
 
 And install all the dependencies
 `yarn install`
