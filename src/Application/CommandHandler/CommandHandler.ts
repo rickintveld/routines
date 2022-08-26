@@ -1,14 +1,24 @@
+import { Logger } from 'tslog';
+
 export default abstract class CommandHandler<T> {
+    public static inject = ['Logger'] as const;
+
+    constructor(private logger: Logger) {}
+
     public async handle(command: T): Promise<void> {
+        this.logger.info('Update command state to: Pending');
         await this.updateState(command, 'Pending');
 
         try {
-            await this.execute(command);
+            const output = await this.execute(command);
+            this.logger.info(output);
         } catch (e) {
-            const output = await this.updateState(command, 'Failed');
-            // let the terminal speak the output
+            this.logger.error(e.message);
+            this.logger.info('Update command state to: Failed');
+            await this.updateState(command, 'Failed');
         }
 
+        this.logger.info('Update command state to: Finished');
         await this.updateState(command, 'Finished');
     }
 
