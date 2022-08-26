@@ -11,6 +11,6 @@ parameters:
             host: redis.service.dev
             db: 1
     routines:
-        morning: ['good morning', 'telegram', 'whatsapp']
-        afternoon: ['good day', 'telegram', 'whatsapp']
-        evening: ['good evening', 'telegram', 'whatsapp']
+        morning: ['hello', 'telegram', 'whatsapp']
+        afternoon: ['hello', 'telegram', 'whatsapp']
+        evening: ['hello', 'telegram', 'whatsapp']
