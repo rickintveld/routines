@@ -10,6 +10,7 @@ export default abstract class CommandHandler<T> {
         await this.updateState(command, 'Pending');
 
         try {
+            this.logger.info('Executing command:', command);
             const output = await this.execute(command);
             this.say.speak(output);
         } catch (e) {
@@ -17,7 +18,6 @@ export default abstract class CommandHandler<T> {
             await this.updateState(command, 'Failed');
         }
 
-        this.logger.info('Update command state to: Finished');
         await this.updateState(command, 'Finished');
     }
 
