@@ -11,7 +11,7 @@ And install all the dependencies
 
 ## Routines
 
-Execute the following commands to execute a routine or a specific action
+Execute one of the following commands to execute a routine or a specific action
 
 ```
 yarn morning //['hello', 'telegram', 'whatsapp', 'news', 'forex', 'weather', 'email']

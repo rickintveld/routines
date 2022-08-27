@@ -47,6 +47,9 @@
     "dependencies": {
         "axios": "^0.27.2",
         "config": "^3.3.7",
+        "dotenv": "^16.0.1",
+        "env": "^0.0.2",
+        "imap-simple": "^5.1.0",
         "ioredis": "^5.2.3",
         "js-yaml": "^4.1.0",
         "mysql": "^2.18.1",
