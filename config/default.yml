@@ -7,6 +7,9 @@ parameters:
         port: 993
         tls: true
         authTimeout: 3000
+    weather:
+        baseUrl: https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Schiedam?unitGroup=metric&key=API_KEY&contentType=json
+        apiKey: VJA6U5777NPFZNS2H6L5V55U7
     databases:
         mysql:
             host: db
